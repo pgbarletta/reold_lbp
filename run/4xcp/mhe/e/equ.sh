@@ -1,6 +1,6 @@
 #!/bin/bash
 export CUDA_VISIBLE_DEVICES="1"
-i=28
+i=0
 starting_mdin="0equ.in"
 
 for step in `cat step.list`
@@ -17,8 +17,6 @@ do
 	inpcrd=${k}e4xcp.rst7
 	restrt=${i}e4xcp.rst7
 	mdcrd=${i}e4xcp.nc
-
-
 
     if [ $i == 1 ]
     then
@@ -39,7 +37,7 @@ do
     	refc=${k}e4xcp.rst7
 
         # On the 1st step: mdin = starting_mdin
-	    sed "s/50\.0/${step}/" $starting_mdin > $mdin
+        sed "s/50\.0/${step}/" $starting_mdin > $mdin
 
 	    pmemd.cuda -O -i $mdin -o $mdout -p $prmtop -c $inpcrd -r $restrt -ref $refc -x $mdcrd
 	    echo "Done step:" $i

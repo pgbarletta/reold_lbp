@@ -7,7 +7,7 @@ mdout="hea.out"
 prmtop="/home/german/lbp/top_files/4uet.prmtop"
 inpcrd="../m/mm4uet.rst7"
 restrt="h4uet.rst7"
-refc="mm4uet.rst7"
+refc="../m/mm4uet.rst7"
 mdcrd="h4uet.nc"
 
 pmemd.cuda -O -i $mdin -o $mdout -p $prmtop -c $inpcrd -r $restrt -ref $refc -x $mdcrd
