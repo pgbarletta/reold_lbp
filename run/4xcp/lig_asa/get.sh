@@ -1,5 +1,5 @@
 #!/bin/bash
-list=$(<pdbs.list)
+list=$(<list_pdbs)
 for file in $list
 do
     echo $file
