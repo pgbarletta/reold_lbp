@@ -18,7 +18,7 @@ do
 
     if [ $i == 1 ]
     then
-        inpcrd=../mhe/e/30e1ael.rst7
+        inpcrd=../mhe/e/75e1ael.rst7
 
         pmemd.cuda -O -i $mdin -o $mdout -p $prmtop -c $inpcrd -r $restrt -x $mdcrd
         echo "Done step:" $i
