@@ -1,5 +1,5 @@
 #!/bin/bash
 
-ANA avg_1ure.pdb -c beta.cfg --NDD_input  in_ndd_avg_1ure --NDD_output  out_ndd_1ure
+ANA avg_1ure.pdb -c beta.cfg --NDD_input in_ndd_avg_1ure --NDD_output  out_ndd_1ure
 
 exit 0
