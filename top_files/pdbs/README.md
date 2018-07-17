@@ -47,3 +47,13 @@ Recorto 4UET y 4XCP y las alineo a la posición 4XCP (p/ no mover el ligando).
     Le cambié el nombre de la cadena de X a B al palmitato 
     pdb4amber -i 1ure.pdb -o h1ure.pdb  --reduce  // elimino todos los archivos salvo h1ure.pdb
     wrote and run "leap_1ure.in". logfile in "log_1ure"
+
+2W9Y:
+-----
+    cp orig_2w9y.pdb model/2W9Y.pdb // no tenía hidrógenos 
+        // también le borré los 1eros 2 aminoacidos (-1 y 0) q eran parte del tag.
+        // también cambié la ACYX por CYS
+    Modelé los 4 residuos faltantes (43-46) en model/. Hice 50 modelos, elegí: 
+    cp model/2W9Y_full.B99990034.pdb 2w9y.pdb
+    pdb4amber -i 2w9y.pdb -o h2w9y.pdb  --reduce  // elimino todos los archivos salvo h2w9y.pdb
+    wrote and run "leap_2w9y.in". logfile in "log_2w9y"
