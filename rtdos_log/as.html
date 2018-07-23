@@ -7,12 +7,12 @@
 }
 
 .bar:hover {
-  fill: brown;
+  fill: Crimson;
 }
 
-.axis--x path {
+/* .axis--x path {
   display: none;
-}
+} */
 
 </style>
 
@@ -21,39 +21,58 @@
 <script>
 
 var svg = d3.select("svg"),
-    margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom;
+    margin = {top: 10, right: 10, bottom: 40, left: 80},
+    width = +svg.attr("width") - margin.left - margin.right - 20,
+    height = +svg.attr("height") - margin.top - margin.bottom - 20,
+    width_plot = +svg.attr("width") - margin.left - margin.right,
+    height_plot = +svg.attr("height") - margin.top - margin.bottom;
 
-var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+
+var x = d3.scaleBand().round(true).rangeRound([0, width]).padding(0.1),
     y = d3.scaleLinear().rangeRound([height, 0]);
 
 var g = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.csv("http://127.0.0.1:8887/rtdos_log/his_vol_4xcp.csv", function(d) {
-  d.frequency = +d.frequency;
+  d.Probability = +d.Probability;
   return d;
 }, function(error, data) {
   if (error) throw error;
 
   x.domain(data.map(function(d) { return d.Volume; }));
-  y.domain([0, d3.max(data, function(d) { return d.Probability; })]);
+  y.domain([0, d3.max(data, function(d) { return d.Probability; })]);    
 
-  // g.append("g")
-  //     .attr("class", "axis axis--x")
-  //     .attr("transform", "translate(0," + height + ")")
-  //     .call(d3.axisBottom(x));
 
-  // g.append("g")
-  //     .attr("class", "axis axis--y")
-  //     .call(d3.axisLeft(y).ticks(10, "%"))
-  //   .append("text")
-  //     .attr("transform", "rotate(-90)")
-  //     .attr("y", 6)
-  //     .attr("dy", "0.71em")
-  //     .attr("text-anchor", "end")
-  //     .text("Frequency");
+var xticks = x.domain().filter(function(d,i){ return !(i%4); } );
+
+g.append("g")
+  .attr("class", "axis axis--x")
+  .call(d3.axisBottom(x).tickValues(xticks))
+  .attr("transform", "translate(0," + height + ")")
+  .style("font-size","18px")
+  .append("text")
+      .style("fill", "black")
+      .style("font-size", "34px")
+      .attr("y", 135)
+      .attr("x", 425)
+      .attr("dy", "-2.5em")
+      .attr("text-anchor", "end")
+      .text("Volume")  
+
+  g.append("g")
+    .attr("class", "axis axis--y")
+    .call(d3.axisLeft(y).ticks(5))
+    .style("font-size","18px")
+    .append("text")
+      .style("fill", "black")
+      .style("font-size", "34px")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -125)
+      .attr("y", 30)
+      .attr("dy", "-2.5em")
+      .attr("text-anchor", "end")
+      .text("Density");
 
   g.selectAll(".bar")
     .data(data)
@@ -63,5 +82,6 @@ d3.csv("http://127.0.0.1:8887/rtdos_log/his_vol_4xcp.csv", function(d) {
       .attr("y", function(d) { return y(d.Probability); })
       .attr("width", x.bandwidth())
       .attr("height", function(d) { return height - y(d.Probability); });
+  
 });
 </script>
