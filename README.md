@@ -8,3 +8,7 @@ esta recortado como los PCA y posteriormente renormalizado con ANA.
 ### 2
 El average de 4uet tiene el atomo 275 ?o 264? (HB3 de la PRO 17) cagado. Sale con coord
 locas. Así q cuando tenga q usar ese pdb, le borro ese hidrógeno.
+
+### 3
+vvgv_4xcp.ipynb: last 4us
+2vvgv_4xcp.ipynb: first 3us
