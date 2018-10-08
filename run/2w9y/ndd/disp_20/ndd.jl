@@ -8,31 +8,37 @@
 using Chemfiles
 using StaticArrays
 using ArgParse
-using DelimitedFiles, LinearAlgebra
+using DelimitedFiles
 ##########
 # functions
 ##########
-function read_ptraj_modes(filename, nmodes::Int64 = 0, norma::Bool = true)
+function read_ptraj_modes(filename, nmodes::Int64=0, norma::Bool=true)
     modes_text = readdlm(filename, skipstart=0, skipblanks=true, comments=true,
         comment_char='*')
 
     if nmodes == 0
-        nmodes = convert(Int64, modes_text[1, 5])
+        nmodes = modes_text[1, 5]
     end
-    ncoords = convert(Int64, modes_text[2, 1])
+    modes_elements = modes_text[2, 1]
 
+    ncoords = convert(Int64, modes_elements)
     lines = ceil(Int64, ncoords/7)
-    fields_per_line = lines * 7
-    evalue = MVector{nmodes, Float64}(undef)
-    mode = MMatrix{ncoords, nmodes, Float64}(undef)
+    rest = convert(Int64, ncoords % 7)
 
-    j = lines + 1 + 2 # 1 p/ q lea la prox linea 2 por el header
+    eval = Array{Float64}(nmodes);
+    mode = Array{Float64}(ncoords, nmodes);
+    temp1 = Array{Float64}(ncoords, 1);
+    temp2 = Array{Float64}(ncoords+(7-rest));
+
+    j=lines + 1 + 2 # 1 p/ q lea la prox linea 2 por el header
     for i=1:nmodes
-        evalue[i] = modes_text[j, 2]
+        eval[i] = modes_text[j, 2]
         temp = permutedims(modes_text[(j+1):(lines+j), :], [2, 1])
-        temp2 = reshape(temp, fields_per_line)
-        [ pop!(temp2) for k = ncoords+1:fields_per_line ]
-        mode[:, i] = convert(MVector{ncoords, Float64}, temp2)
+        temp2 = reshape(temp, ncoords+(7-rest))
+        for k=(rest+1):7
+            pop!(temp2)
+        end
+        mode[:, i] = temp2
         j = j + lines + 1
     end
 
@@ -42,7 +48,7 @@ function read_ptraj_modes(filename, nmodes::Int64 = 0, norma::Bool = true)
         end
     end
 
-     return mode, evalue
+    return mode, eval
 end
 #########
 function displaceAA(in_frm, aa, aa_3, in_vec)
@@ -168,8 +174,8 @@ const in_top = Topology(in_frm)
 const aa = convert(Int64, count_residues(in_top))
 const aa_3 = aa * 3
 # Initialize modes vectors
-in_modes = MMatrix{aa_3, aa, Float64}(undef)
-in_evals = MVector{aa_3, Float64}(undef)
+in_modes = Array{Float64, 2}(undef, aa_3, aa)
+in_evals = Array{Float64, 1}(undef, aa_3)
 if (amber_modes)
     try
         in_modes, in_evals = read_ptraj_modes(modes_filename)
