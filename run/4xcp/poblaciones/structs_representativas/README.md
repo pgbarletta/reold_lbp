@@ -1,4 +1,4 @@
-# ss
+# PDBs Armados a mano! 
 
 Acá junto los archivos top de intra (la proteína) y de lig/intra (el ligando).
 Están separados pq p/ obtenerlos tuve q alinear, 1ero según proteína y en 2do
