@@ -57,3 +57,34 @@ Recorto 4UET y 4XCP y las alineo a la posición 4XCP (p/ no mover el ligando).
     cp model/2W9Y_full.B99990034.pdb 2w9y.pdb
     pdb4amber -i 2w9y.pdb -o h2w9y.pdb  --reduce  // elimino todos los archivos salvo h2w9y.pdb
     wrote and run "leap_2w9y.in". logfile in "log_2w9y"
+
+
+#######
+# Alineo
+######
+
+1IFB:
+----
+    cp orig_1ifb.pdb 1ifb.pdb // y a 1ifb le borré todos los hidrógenos con: %g/          H/d
+    Después usé ANA p/ renumerar sus átomos y aminoácidos // ANA 1ifb.pdb --tool_pdb_norm=as && mv as.pdb 1ifb.pdb
+    Le cambié el nombre de la cadena de X a A
+    pdb4amber -i 1ifb.pdb -o h1ifb.pdb  --reduce  // elimino todos los archivos salvo h1ifb.pdb
+    wrote leap_1ifb.in
+    tleap -f leap_1ifb.in > log_1ifb
+
+2IFB:
+----
+    saco el palmitato lineal y conservo el curvado. 
+    a orig_2ifb.pdb 
+    Después usé ANA p/ renumerar sus átomos y aminoácidos // ANA 2ifb.pdb --tool_pdb_norm=as && mv as.pdb 2ifb.pdb
+    copio el palmitato de 2ifb.pdb > plm.pdb
+    no tenía hidrógenos //  y si tenía, los borré todos los hidrógenos con: %g/          H/d
+    pdb4amber -i plm.pdb -o hplm.pdb  --reduce  // elimino todos los archivos salvo plm.pdb
+    antechamber -i hplm.pdb -fi pdb -o hplm.mol2 -fo mol2 -c bcc
+    parmchk2 -i hplm.mol2 -f mol2 -o hplm.frcmod
+    wrote leap_plm.in
+    tleap -f leap_plm.in > log_plm // Le cambié el nombre de la cadena de X a B al palmitato 
+
+    pdb4amber -i 2ifb.pdb -o h2ifb.pdb  --reduce  // elimino todos los archivos salvo h2ifb.pdb
+    tleap -f leap_2ifb.in > log_2ifb
+    wrote and run **leap_2ifb.in** logfile in **log_2ifb**
