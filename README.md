@@ -12,3 +12,8 @@ locas. Así q cuando tenga q usar ese pdb, le borro ese hidrógeno.
 ### 3
 vvgv_4xcp.ipynb: last 4us
 2vvgv_4xcp.ipynb: first 3us
+
+### 4
+Guarda q el frame 41474 de la corrida de 2IFB tiene en 0.000 a toda su coordenada
+Z. *full_fit_2ifb.nc* es una corrida
+estirada con 1 frame de más p/ reemplazar al 41474
