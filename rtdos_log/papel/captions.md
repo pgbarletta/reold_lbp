@@ -3,7 +3,9 @@
  * **2W9Y**: α sin ligando y de otro organismo.
  * **4UET**: α sin ligando.
  * **4XCP**: α con ligando
- 
+ * **1IFB**: β sin ligando.
+ * **2IFB**: β con ligando
+
 ## 1
  * **vol**: Histogramas de volúmenes de las 4. Los volúmenes fueron calculados en 1/10 frames de la trayectoria original (1 c/ 100ps), por razones de costo computacional. Irían acompañados de una representación de las proteínas.
 
