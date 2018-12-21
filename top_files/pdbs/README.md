@@ -59,10 +59,6 @@ Recorto 4UET y 4XCP y las alineo a la posición 4XCP (p/ no mover el ligando).
     wrote and run "leap_2w9y.in". logfile in "log_2w9y"
 
 
-#######
-# Alineo
-######
-
 1IFB:
 ----
     cp orig_1ifb.pdb 1ifb.pdb // y a 1ifb le borré todos los hidrógenos con: %g/          H/d
@@ -88,3 +84,14 @@ Recorto 4UET y 4XCP y las alineo a la posición 4XCP (p/ no mover el ligando).
     pdb4amber -i 2ifb.pdb -o h2ifb.pdb  --reduce  // elimino todos los archivos salvo h2ifb.pdb
     tleap -f leap_2ifb.in > log_2ifb
     wrote and run **leap_2ifb.in** logfile in **log_2ifb**
+
+WAT1IFB:
+----
+    cp orig_wat1ifb.pdb wat1ifb.pdb // y a wat1ifb le borré todos los hidrógenos con: %g/          H/d
+    Después usé ANA p/ renumerar sus átomos y aminoácidos // ANA wat1ifb.pdb --tool_pdb_norm=as && mv as.pdb wat1ifb.pdb
+    Le cambié el nombre de la cadena de X a A
+    pdb4amber -i wat1ifb.pdb -o hwat1ifb.pdb  --reduce  // elimino todos los archivos salvo hwat1ifb.pdb
+    wrote leap_wat1ifb.in
+    tleap -f leap_wat1ifb.in > log_wat1ifb
+
+
